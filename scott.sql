@@ -1150,3 +1150,104 @@ SET LOC='SEOUL'
 WHERE DEPTNO = 30;
 
 COMMIT;
+
+----------------------------------------------------
+-- DDL(데이터 정의어)
+-- 객체를 생성, 변경, 삭제 
+-- 실행하면 바로 반영됨
+
+-- CREATE(생성), alter(변경), drop(삭제)
+
+-- create table 테이블이름(
+--      필드명1 자료형,
+--      필드명2 자료형,
+--)
+
+-- 테이블 이름 규칙
+-- 문자로 시작
+-- 같은 사용자 안에서 동일한 테이블 명 사용불가
+-- sql 키워드는 테이블 이름으로 사용할 수 없음
+
+-- 필드명 생성 규칙
+-- 문자로 시작
+-- 열 이름은 중복되면 안됨
+-- sql 키워드 사용불가ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
+
+-- 자료형 : 숫자 NUMBER, 문자 varchar2, 날짜 date
+create table EMP_DDL(
+      EMPNO     NUMBER(4), -- 숫자로 4자리 허용
+      Ename     VARCHAR2(10),
+      Job       VARCHAR2(9),
+      Mgr       NUMBER(4),
+      Hiredate  DATE,
+      Sal       NUMBER(7,2), -- 숫자로 7자리 허용(소수점 2자리 허용)
+      Comm      NUMBER(7,2),
+      Deptno    NUMBER(2)
+
+);
+
+DESC EMP_DDL;
+
+
+drop table EMP_DDL;
+
+create table dept_ddl2 as select * from dept where 1<>1;
+select * from dept_ddl2;
+
+-- ALTER
+-- 이미 생성된 객체를 변경
+
+create table emp_alter as select * from emp;
+
+select * from emp_alter;
+
+-- 새로운 컬럼(열) 추가 : ADD
+DESC EMP_ALTER;
+
+ALTER TABLE EMP_ALTER ADD HP VARCHAR2(20);
+DESC EMP_ALTER;
+
+SELECT* FROM EMP_ALTER;
+
+-- RENAME : 열 이름을 변경
+ALTER TABLE EMP_ALTER RENAME COLUMN HP TO TEL;
+DESC EMP_ALTER;
+
+-- MODIFY : 열의 자료형을 변경
+ALTER TABLE EMP_ALTER MODIFY EMPNO NUMBER(5);
+
+-- DROP : 열삭제
+ALTER TABLE EMP_ALTER DROP COLUMN TEL;
+DESC EMP_ALTER;
+
+-- 테이블 이름 변경
+RENAME EMP_ALTER TO EMP_RENAME;
+DESC EMP_RENAME;
+
+TRUNC TABLE  EMP_RENAME;
+
+CREATE TABLE MEMBER (
+    id  char(8),
+    name varchar2(10),
+    addr varchar2(50),
+    nation char(4),
+    email varchar2(50),
+    age NUMBER(7,2)
+    
+);
+DESC MEMBER;
+ALTER TABLE EMP_ALTER ADD HP VARCHAR2(20);
+
+--실습 2번
+ALTER TABLE MEMBER ADD  BIGO VARCHAR2(20);
+ALTER TABLE MEMBER MODIFY BIGO VARCHAR2(30);
+ALTER TABLE MEMBER RENAME COLUMN BIGO TO REMARK;
+
+--실습 3번
+
+
+
+
+
+
+
