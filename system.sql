@@ -33,6 +33,7 @@ create user c##test2 identified by 12345
 default tablespace users
 temporary tablespace temp;
 
+-- resource : trigger, sequence,table.. 생성권한들이 모여있는 롤
 grant resource,create session, create table to c##test2;
 
 -- 공간을 두개 할당
