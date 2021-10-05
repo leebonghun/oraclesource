@@ -1265,9 +1265,68 @@ SELECT * FROM VM_EMPALL;
 -- 시퀀스(수업에서 자주 사용)
 -- 오라클 데이터베이스에서 특정 규칙에 맞는 연속 숫자 생성
 
+CREATE SEQUENCE SEQ_DEPT_SEQUENCE 
+INCREMENT BY 10 -- 옵션(기본값은 1) 
+START WITH 10 -- 옵션(기본값은 1)
+MAXVALUE 90 -- 옵션(기본값은 10의 27승)
+MINVALUE 0 -- 옵션(기본값은 1)
+NOCYCLE CACHE 2; -- 옵션(CYCLE OR NOCYCLE, CACHE 는 미리 발급해 놓을 수)
+
+-- DEPT 테이블에서 부서번호를 10으로 시작해서 90까지 넣고 싶을 때
+
+CREATE TABLE DEPT_SEQUENCE AS SELECT * FROM DEPT WHERE 1<>1;
+
+INSERT INTO DEPT_SEQUENCE(DEPTNO,DNAME,LOC)
+VALUES(SEQ_DEPT_SEQUENCE.nextval, 'DATABASE','SEOUL');
+
+ALTER SEQUENCE SEQ_DEPT_SEQUENCE
+INCREMENT BY 3
+MAXVALUE 99
+CYCLE;
+
+SELECT * FROM DEPT_SEQUENCE;
+DROP SEQUENCE SEQ_DEPT_SEQUENCE;
+
+-- 인덱스 : 빠른 검색
+-- 데이터 검색 : Table Full Scan, Index Scan
+
+create index idx_emp_sal on emp(sal);
+
+-- 제약조건을 사용한 테이블 생성
+CREATE TABLE userTBL(
+userid char(8) not null primary key,
+username varchar(10) not null);
+
+
+DROP INDEX IDX_EMP_SAL ;
 
 
 
+-- 문)1
+create table EMPIDX1 AS SELECT * FROM EMP ;
+CREATE INDEX IDX_EMPIDX_EMPNO1 ON EMPIDX1(EMPNO);
 
 
+-- 문)2
+CREATE VIEW EMPIDX_OVER14K AS SELECT * FROM EMPIDX1 WHERE SAL > 1500;
 
+SELECT * FROM EMPIDX_OVER14K;
+
+-- 문)3
+
+CREATE TABLE DEPTSEQ AS SELECT * FROM DEPT WHERE 1<>1;
+SELECT * FROM DEPTSEQ;
+
+CREATE SEQUENCE DEPTSEQ2
+INCREMENT BY 1 -- 증가값 1
+START WITH 1 -- 시작값 1
+MAXVALUE 99 -- 최댓값 99
+MINVALUE 1; -- 최소값 1
+            -- 캐시 없음
+            
+            
+-- 세개의 부서를 차례대로 추가
+INSERT INTO DEPTSEQ(DEPTNO,DNAME,LOC)
+VALUES(DEPTSEQ2.nextval, 'MOBILE','ILSAN');
+
+SELECT * FROM DEPTSEQ;
