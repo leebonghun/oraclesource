@@ -31,3 +31,4 @@ grant create table to c##test;
 create user c##test2 identified by 12345;
 grant resource,create session, create table to c##test2;
 
+drop user c##test;
