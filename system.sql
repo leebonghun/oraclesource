@@ -28,7 +28,16 @@ drop user c##test ;
 grant create session to c##test;
 grant create table to c##test;
 
-create user c##test2 identified by 12345;
+drop user c##test2 cascade;
+create user c##test2 identified by 12345
+default tablespace users
+temporary tablespace temp;
+
 grant resource,create session, create table to c##test2;
 
-drop user c##test;
+-- 공간을 두개 할당
+alter user c##test2 quota 2M on users;
+
+-- 사용자 삭제 ( 현재 사용자가 만든 모든 객체 같이 삭제)
+drop user c##test cascade;
+
